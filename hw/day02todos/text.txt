@@ -1,0 +1,54 @@
+day02todos
+----------
+
+Create database (utf8-general_ci) and user named day02todos. Give this user all permissions to that database.
+Create table:
+
+todos
+- id INT PK AI
+- task VC(100)
+- dueDate DATE
+- isDone enum('Pending','Done')
+
+
+Create a new VScode/NodeJS project 'day02todos' to implement the following API calls operating on JSON data:
+
+GET /api/todos -> returns all todos, code 200 on success
+GET /api/todos/32 -> return one todo, with id=32, code 200 on success, 404 if does not exist, 500 on internal error
+POST /api/todos -> create a todo (validation! see below), returns ID of the newly created record, code 201 on success, 500 on internal error
+PUT /api/todos/17 -> update a todo (validation! see below), returns "true" as the body of response, with 200 code, otherwise "false", 404 if id does not exist, 500 on internal error
+DELETE /api/todos/21 -> delete a todo, returns "true" with 200 code if record was deleted, 404 if does not exist, otherwise "false", 500 on internal error
+
+Implement error handling for POST and PUT.
+Try to create a single validation function that can be used for both to avoid extensive code duplication (DRY principle).
+Requirements:
+- id must not be supplied
+- task must be 1-100 characters long
+- dueDate year must be between 1900 and 2099, date must parse as valid yyyy-mm-dd format
+- isDone is either 'Pending' or 'Done'
+
+On failed validation 400 error should be returned by the API and the body of the response should contain a textual description of what went wrong, e.g. "task must be 1-100 characters long"
+
+
+Logging:
+On errors your code should return an appropriate http code (400, 404, 500)
+as well as it should write to a log file using npmlog library:
+
+https://geshan.com.np/blog/2021/01/nodejs-logging-library/
+
+
+Tomorrow we'll start building a client for this API using HTML, CSS, and JavaScript/jQuery.
+
+
+dueDate: {
+   year: "2022",
+   month: "10",
+   day: "23"
+}
+
+
+
+CREATE USER 'day02todos'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Bv6e84Is[85A';
+GRANT ALL PRIVILEGES ON `day02todos`.* TO 'day02todos'@'localhost';
+FLUSH PRIVILEGES;
+mysql-password: Bv6e84Is[85A
